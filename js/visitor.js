@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var url = new URL(window.location.href);
     var MobileNumber = url.searchParams.get("m");
     console.log("MobileNumber from url "+MobileNumber)
-    
+
     if(MobileNumber!=null || MobileNumber!=undefined){
     var xhr = new XMLHttpRequest();
     var url ="https://cameracomputerworld.herokuapp.com/visitor?phoneNumber="+MobileNumber
@@ -25,13 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("offerButton").addEventListener("click", function() {
   var data;
-  console.log("mobile number in offer popup is "+document.getElementById("textmob").value)
+  var mNumber=document.getElementById("textmob").value
+  console.log("mobile number in offer popup is "+mNumber)
+  var phoneno = /^\d{10}$/;
+  if(mNumber.match(phoneno)){
   var xhr = new XMLHttpRequest();
   var url = "https://cameracomputerworld.herokuapp.com/offer/generateOfferCode"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "mobileNumber":document.getElementById("textmob").value,
+    "mobileNumber":mNumber,
     "offerType":"SERVICE"
   };
   xhr.onload = function() {
@@ -48,5 +51,8 @@ document.getElementById("offerButton").addEventListener("click", function() {
     }
   };
   xhr.send(JSON.stringify(body));
+}else{
+  alert("invalid phone number")
+}
 
 });
