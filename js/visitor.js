@@ -35,6 +35,10 @@ document.getElementById("offerButton").addEventListener("click", function() {
   console.log("mobile number in offer popup is "+mNumber)
   var phoneno = /^\d{10}$/;
   if(mNumber.match(phoneno)){
+    // setTimeout(() => {
+      document.getElementById('submit').style.display = 'none';
+      document.getElementById('load').style.display = 'block';
+
   var xhr = new XMLHttpRequest();
   var url = "https://cameracomputerworld.herokuapp.com/offer/generateOfferCode"
   xhr.open("POST", url, false);
@@ -51,15 +55,23 @@ document.getElementById("offerButton").addEventListener("click", function() {
         document.getElementById("textmob1").innerHTML = data.offerCode;
         document.getElementById('textmob1').style.display = 'block';
         document.getElementById('copy').style.display = 'block';
-        document.getElementById('submit').style.display = 'none';
+        document.getElementById('load').style.display = 'none';
         var x = document.getElementById("snackbar");
         x.className = "show";
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }else {
-      console.log("code not generated "+xhr.response)
+        } else {
+          console.log("code not generated "+xhr.response)
       }
     };
+    try{
     xhr.send(JSON.stringify(body));
+  }catch(err){
+    var x = document.getElementById("snackbarFailed");
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    document.getElementById('submit').style.display = 'block';
+    document.getElementById('load').style.display = 'none';
+  }
   }else{
   var x = document.getElementById("snackbarinvalid");
 		  x.className = "show";

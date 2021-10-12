@@ -9,8 +9,9 @@
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Camera & Computer World</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-	<link rel="stylesheet" href="Home.css" media="screen">
-	<link rel="stylesheet" href="model.css" media="screen">
+	 <link rel="stylesheet" href="Home.css" media="screen">
+	 <link rel="stylesheet" href="model.css" media="screen">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   	<link rel="stylesheet" href="toast.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
@@ -148,9 +149,11 @@
 							    <div id="submit"  style="display: block;">
 								<button type="button" id="offerButton" class="btn btn-primary d-block py-3">Get Code</button>
 								</div>
-                                    <div id="snackbar">Message sent</div>
-                										<div id="snackbarcopy">Coupon Code copied</div>
-                										<div id="snackbarinvalid">Invalid Mobile Number</div>
+                <button class="buttonload" id="load" style="display: none;"><i class="fa fa-spinner fa-spin"></i>LOADING</button>
+                <div id="snackbar">Message sent</div>
+                <div id="snackbarcopy">Coupon Code copied</div>
+                <div id="snackbarinvalid">Invalid Mobile Number</div>
+                <div id="snackbarFailed">Internet Issue: Please Try Again</div>
 				      	</div>
 				      </div>
 				    </div>
