@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+
     var url = new URL(window.location.href);
     var MobileNumber = url.searchParams.get("m");
     console.log("MobileNumber from url "+MobileNumber)
@@ -21,6 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
+ setTimeout(function(){   document.getElementById("explore").click();
+document.getElementById("textmob").value=MobileNumber;
+}, 2000);
+
 });
 
 document.getElementById("offerButton").addEventListener("click", function() {
@@ -46,13 +52,43 @@ document.getElementById("offerButton").addEventListener("click", function() {
         document.getElementById('textmob1').style.display = 'block';
         document.getElementById('copy').style.display = 'block';
         document.getElementById('submit').style.display = 'none';
-    }else {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }else {
       console.log("code not generated "+xhr.response)
+      }
+    };
+    xhr.send(JSON.stringify(body));
+  }else{
+  var x = document.getElementById("snackbarinvalid");
+		  x.className = "show";
+		  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+});
+
+
+document.getElementById("getInTouch").addEventListener("click", function() {
+
+  var xhr = new XMLHttpRequest();
+  var url = "https://cameracomputerworld.herokuapp.com/getInTouch/sendMessage"
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json");
+  var body = {
+    "mobileNumber": document.getElementById("email-8db6").value,
+    "name":  document.getElementById("name-8db6").value,
+    "message": document.getElementById("message-8db6").value
+  };
+  xhr.onload = function() {
+    if (xhr.status == 201) {
+        data = xhr.response
+        console.log("get in touch "+data);
+        alert ("Message sent")
+    }else {
+      console.log("get in touch failed "+xhr.response)
     }
   };
   xhr.send(JSON.stringify(body));
-}else{
-  alert("invalid phone number")
-}
 
+ console.log("skdjbdskjfbdsjk");
 });

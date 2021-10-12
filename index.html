@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="nicepage.css" media="screen">
 	<link rel="stylesheet" href="Home.css" media="screen">
 	<link rel="stylesheet" href="model.css" media="screen">
+  	<link rel="stylesheet" href="toast.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.26.0, nicepage.com">
@@ -27,12 +28,6 @@
 
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Ubuntu:300,300i,400,400i,500,500i,700,700i">
-
-
-
-
-
-
 
 
     <script type="application/ld+json">{
@@ -93,7 +88,7 @@
               <div class="u-container-layout u-valign-top u-container-layout-1">
                 <h2 class="u-color-scheme-u10 u-color-style-multicolor-1 u-custom-font u-font-oswald u-text u-text-palette-3-base u-text-1">Camera &amp; <br>Computer World</h2>
                 <p class="u-large-text u-text u-text-body-alt-color u-text-variant u-text-2">Number 1 shop in Patna. <br>Deals in all Laptop, Camera &amp; <br>Computer Assessories.</p>
-                <a href="" data-toggle="modal" data-target="#offermodal" class="u-border-2 u-border-palette-3-base u-btn u-button-style u-hover-palette-3-base u-none u-text-body-alt-color u-text-hover-white u-btn-1">Explore Offers</a>
+                <a href="" data-toggle="modal" data-target="#offermodal" class="u-border-2 u-border-palette-3-base u-btn u-button-style u-hover-palette-3-base u-none u-text-body-alt-color u-text-hover-white u-btn-1" id="explore">Explore Offers</a>
               </div>
             </div>
           </div>
@@ -147,13 +142,15 @@
 								  <button id='textmob1' style="display: none; text-align:center;" class="form-control" onclick="copyToClipboard('#textmob1')">XUV5G</button>
 								</div>
 								<div id="copy"  style="display: none;">
-									<button class="btn btn-primary d-block py-3" onclick="copyToClipboard('#textmob1')">Copy</button>
+									<button type="button" class="btn btn-primary d-block py-3" onclick="copyToClipboard('#textmob1')">Copy</button>
 								</div>
             	</form>
 							    <div id="submit"  style="display: block;">
-									<button id="offerButton" class="btn btn-primary d-block py-3">Get Code</button>
+								<button type="button" id="offerButton" class="btn btn-primary d-block py-3">Get Code</button>
 								</div>
-
+                                    <div id="snackbar">Message sent</div>
+                										<div id="snackbarcopy">Coupon Code copied</div>
+                										<div id="snackbarinvalid">Invalid Mobile Number</div>
 				      	</div>
 				      </div>
 				    </div>
@@ -647,19 +644,19 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                       <input type="text" placeholder="Enter your Name" id="name-8db6" name="name" class="u-input u-input-rectangle u-white" required="">
                     </div>
                     <div class="u-form-email u-form-group">
-                      <label for="email-8db6" class="u-form-control-hidden u-label">Email</label>
-                      <input type="email" placeholder="Enter a valid email address" id="email-8db6" name="email" class="u-input u-input-rectangle u-white" required="">
+                      <label for="email-8db6" class="u-form-control-hidden u-label">Phone Number</label>
+                      <input type="text" placeholder="Enter a valid phone number" id="email-8db6" name="email" class="u-input u-input-rectangle u-white" required="">
                     </div>
                     <div class="u-form-group u-form-message">
                       <label for="message-8db6" class="u-form-control-hidden u-label">Message</label>
                       <textarea placeholder="Enter your message" rows="4" cols="50" id="message-8db6" name="message" class="u-input u-input-rectangle u-white" required=""></textarea>
                     </div>
                     <div class="u-form-group u-form-submit">
-                      <a href="#" class="u-btn u-btn-rectangle u-btn-submit u-button-style u-palette-2-base u-btn-1">Submit</a>
+                      <button class="u-btn u-btn-rectangle u-btn-submit u-button-style u-palette-2-base u-btn-1" id="getInTouch">Submit</button>
                       <input type="submit" value="submit" class="u-form-control-hidden">
                     </div>
-                    <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-                    <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+                    <!-- <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+                    <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div> -->
                     <input type="hidden" value="" name="recaptchaResponse">
                   </form>
                 </div>
@@ -668,13 +665,13 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
             <div class="u-align-left u-container-style u-layout-cell u-size-16-xl u-size-19-lg u-size-19-sm u-size-19-xs u-size-60-md u-white u-layout-cell-2">
               <div class="u-container-layout u-valign-top u-container-layout-2">
                 <h5 class="u-text u-text-2">Address</h5>
-                <p class="u-text u-text-grey-50 u-text-3">Camera &amp; Computer World,<br>Shop no.- 201-202, Ashiana Hariniwas Complex, Dakbunglow Road, Patna 800001
+                <p class="u-text u-text-black-50 u-text-3">Camera &amp; Computer World,<br>Shop no.- 201-202, Ashiana Hariniwas Complex, Dakbunglow Road, Patna 800001
                 </p>
                 <h5 class="u-text u-text-4">Call Us</h5>
-                <p class="u-text u-text-grey-50 u-text-5">+91-9386347341&nbsp;<br>+91-9334699828
+                <p class="u-text u-text-black-50 u-text-5">+91-9386347341&nbsp;<br>+91-9334699828
                 </p>
                 <h5 class="u-text u-text-6">Opening Hours</h5>
-                <p class="u-text u-text-grey-50 u-text-7">Monday-Saturday -- 10 am – 9 pm<br>Sunday ……....... 12 pm - 8pm
+                <p class="u-text u-text-black-50 u-text-7">Monday-Saturday -- 10 am – 9 pm<br>Sunday ……....... 12 pm - 8pm
                 </p>
               </div>
             </div>
@@ -738,38 +735,23 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     <script src="js/main.js"></script>
 
 	<script>
-
-		//   var button = document.getElementById('submit')
-    // button.addEventListener('click',hideshow,false);
-    //
-    // function hideshow() {
-    //     document.getElementById('textmob').style.display = 'none';
-		// document.getElementById('textmob1').style.display = 'block';
-		// document.getElementById('copy').style.display = 'block';
-		// document.getElementById('submit').style.display = 'none';
-    // }
-
+  function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    myFunction();
+  }
 	</script>
 
-	<script>
-		function copyToClipboard(element) {
-		  var $temp = $("<input>");
-		  $("body").append($temp);
-		  $temp.val($(element).text()).select();
-		  document.execCommand("copy");
-		  $temp.remove();
-		}
-	</script>
-
-
-
-	<script>
-		window.onload = function() {
-			setTimeout(function() {
-				document.getElementById("offermodal").style.display = 'block';
-			}, 100000);
-		}
-	</script>
+  <script>
+function myFunction() {
+  var x = document.getElementById("snackbarcopy");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+</script>
 
   </body>
 </html>
