@@ -106,6 +106,7 @@ document.getElementById("register").addEventListener("click", function() {
     if (xhr.status == 201) {
         alert("Submitted")
         data = JSON.parse(xhr.response);
+        window.open("./dashboard.html", "app", "resizable=yes");
         console.log("code generated "+data);
         } else {
           console.log("code not generated "+xhr.response)

@@ -21,12 +21,72 @@
             </tr>
           </thead>
           <tbody>
-    
+
           </tbody>
         </table>
       </div>
     </div>
   </div>
-      <script src="js/dashboard.js"></script>
+
+  <div class="form-popup" id="myForm">
+    <form class="form-container">
+      <h1></h1>
+
+      <label for="email"><b>OTP</b></label>
+      <input type="text" placeholder="Enter OTP" id ="otp" name="email" required>
+
+      <button type="submit" class="btn" onclick="verifyOTP()">Verify</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      <button type="submit" class="btn resend" onclick="resendOtp()">RESEND OTP</button>
+
+    </form>
+  </div>
+
+<script>
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+function verifyOTP(){
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:9002/service/verifyOtp"
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json");
+  var body = {
+    "srn":localStorage.getItem('srn'),
+    "otp":document.getElementById('otp').value
+  };
+  xhr.onload = function() {
+    if (xhr.status == 200) {
+      alert("OTP Verified")
+    }else {
+     alert(xhr.response)
+    }
+  };
+  xhr.send(JSON.stringify(body));
+}
+
+function resendOtp(){
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:9002/service/resendOtp"
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json");
+  var body = {
+    "srn":localStorage.getItem('srn'),
+    "adminEmail":localStorage.getItem('adminEmail')
+  };
+  xhr.onload = function() {
+    if (xhr.status == 200) {
+      alert("Message sent")
+    }else {
+     alert(xhr.response)
+    }
+  };
+  xhr.send(JSON.stringify(body));
+}
+</script>
+
+<script src="js/dashboard.js"></script>
 </body>
 </html>
