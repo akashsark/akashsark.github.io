@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/service/getDetails"
+  var url = "https://ccwservice.herokuapp.com/service/getDetails"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "adminEmail": localStorage.getItem("adminEmail"),
-    "srn":  localStorage.getItem("srn"),
+    "srn":  localStorage.getItem("srn")
   };
   xhr.onload = function() {
     if (xhr.status == 200) {
       data=JSON.parse(xhr.response);
+      var f = document.forms['xx'];
+      for(var i=0,fLen=f.length;i<fLen;i++){
+        f.elements[i].readOnly = true;//As @oldergod noted, the "O" must be upper case
+      }
       document.getElementById('srnI').value=data.SRN;
       document.getElementById('cnameI').value=data.cName;
       document.getElementById('contactI').value=data.cPhone;
@@ -22,8 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(data.pThirdPartyExists).checked = true;
       document.getElementById('true').disabled=true;
       document.getElementById('false').disabled=true;
-      document.getElementById("statusI").value = data.status;
-       document.getElementById("statusI").disabled=true;
+      // document.getElementById("statusI").value = data.status;
+      // document.getElementById("statusI").disabled=true;
       if(data.pThirdPartyExists==true){
         string3=`<div id="child">
                    <div class="form-row">
@@ -31,6 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="value">
                           <div class="input-group">
                                   <input class="input--style-5" type="text" id="tpName">
+                           </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="name">Third Party Sent For</div>
+                    <div class="value">
+                          <div class="input-group">
+                                  <input class="input--style-5" type="text" id="tpIssue">
                            </div>
                     </div>
                   </div>
@@ -70,15 +82,21 @@ document.addEventListener("DOMContentLoaded", function () {
                   document.getElementById('tpPrice').value=data.thirdPartyCost;
                   document.getElementById('tpSend').value=data.thirdPartyRecevingDate;
                   document.getElementById('tpDate').value=data.thirdPartySendingDate;
+                  document.getElementById('tpIssue').value=data.thirdPartySent;
 
-                  var f = document.forms['xx'];
-                  for(var i=0,fLen=f.length;i<fLen;i++){
-                    f.elements[i].readOnly = true;//As @oldergod noted, the "O" must be upper case
-                  }
          }
     }else {
      alert("invalid srn")
     }
   };
   xhr.send(JSON.stringify(body));
+});
+
+document.getElementById('cancel').addEventListener("click", function() {
+  if(localStorage.getItem('adminEmail')==="zomby"){
+      window.open("./dashboardAdmin.html", "app", "resizable=yes");
+  }else{
+          window.open("./dashboard.html", "app", "resizable=yes");
+   }
+
 });

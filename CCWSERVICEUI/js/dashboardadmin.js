@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservice.herokuapp.com/service/getInProgressWork?adminEmail="+localStorage.getItem('adminEmail')
+  var url = "https://ccwservice.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + localStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
@@ -25,7 +25,9 @@ function notificationContent(data) {
       var string3=` <tr>
                   <th scope="row">${data[i].SRN}</th>
                   <td>${data[i].cname}</td>
+                  <td>${data[i].dateOfCreation}</td>
                   <td>${data[i].expectedDateOfDelivery}</td>
+                  <td>${data[i].assignee}</td>
                   <td>${data[i].status}</td>
                   <td>
                     <button type="button" id="view${i}" value="${data[i].SRN}" class="btn btn-primary" id=''><i class="far fa-eye"></i></button>
@@ -58,13 +60,12 @@ function notificationContent(data) {
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
       "status":"COMPLETED",
-      "srn":document.getElementById(this.id).value,
-      "adminEmail": localStorage.getItem('adminEmail')
+      "srn":document.getElementById(this.id).value
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
       alert("Successfully Closed")
-      window.open("./dashboard.html", "app", "resizable=yes");
+      window.open("./dashboardAdmin.html", "app", "resizable=yes");
       }else {
        alert(xhr.response)
       }
@@ -84,8 +85,8 @@ function notificationContent(data) {
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
-         alert("Successfully cancelled")
-         window.open("./dashboard.html", "app", "resizable=yes");
+        alert("Successfully cancelled")
+         window.open("./dashboardAdmin.html", "app", "resizable=yes");
       }else {
        alert(xhr.response)
       }
@@ -100,11 +101,12 @@ function notificationContent(data) {
  }
 
 }
+
 document.getElementById('newcase').addEventListener("click", function () {
    window.open("./index.html", "app", "resizable=yes");
 });
 
 document.getElementById('signout').addEventListener("click", function () {
    localStorage.clear();
-   window.open("./admin.html", "app", "resizable=yes");
+    window.open("./admin.html", "app", "resizable=yes");
 });

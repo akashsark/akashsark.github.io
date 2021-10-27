@@ -1,12 +1,11 @@
 var thirdPartyExists=false
 document.addEventListener("DOMContentLoaded", function () {
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/service/getDetails"
+  var url = "https://ccwservice.herokuapp.com/service/getDetails"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "adminEmail": localStorage.getItem("adminEmail"),
-    "srn":  localStorage.getItem("srn"),
+    "srn":  localStorage.getItem("srn")
   };
   xhr.onload = function() {
     if (xhr.status == 200) {
@@ -29,6 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="value">
                           <div class="input-group">
                                   <input class="input--style-5" type="text" id="tpName">
+                           </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="name">Third Party Sent For</div>
+                    <div class="value">
+                          <div class="input-group">
+                                  <input class="input--style-5" type="text" id="tpIssue">
                            </div>
                     </div>
                   </div>
@@ -68,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   document.getElementById('tpPrice').value=data.thirdPartyCost;
                   document.getElementById('tpSend').value=data.thirdPartyRecevingDate;
                   document.getElementById('tpDate').value=data.thirdPartySendingDate;
+                  document.getElementById('tpIssue').value=data.thirdPartySent;
          }
     }else {
      alert("invalid srn")
@@ -88,6 +97,15 @@ $("input[type='radio']").change(function(){
                  <div class="value">
                        <div class="input-group">
                                <input class="input--style-5" type="text" id="tpName">
+                        </div>
+                 </div>
+               </div>
+
+               <div class="form-row">
+                 <div class="name">Third Party Sent For</div>
+                 <div class="value">
+                       <div class="input-group">
+                               <input class="input--style-5" type="text" id="tpIssue">
                         </div>
                  </div>
                </div>
@@ -134,11 +152,11 @@ $("input[type='radio']").change(function(){
 
 
 document.getElementById("confirm").addEventListener("click", function() {
-  var e = document.getElementById("status");
-	var result = e.options[e.selectedIndex].text;
-  console.log("status is"+result);
+  // var e = document.getElementById("status");
+	// var result = e.options[e.selectedIndex].text;
+  // console.log("status is"+result);
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/service/saveCustomer"
+  var url = "https://ccwservice.herokuapp.com/service/saveCustomer"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
@@ -153,7 +171,7 @@ document.getElementById("confirm").addEventListener("click", function() {
     "thirdPartyServiceExists":thirdPartyExists,
     "totalServiceCharge":document.getElementById('pTotalCost').value,
     "deliveryStatus":{
-      "status":result,
+      "status":"IN PROGRESS",
       "expectedDateOfDelivery":document.getElementById('pDelivDate').value
    },
     "thirdPartyService" : {
@@ -168,19 +186,19 @@ document.getElementById("confirm").addEventListener("click", function() {
     body.thirdPartyService.thirdPartyPrice=document.getElementById('tpPrice').value,
     body.thirdPartyService.dateOfSending=document.getElementById('tpSend').value,
     body.thirdPartyService.dateOfReceiving=document.getElementById('tpDate').value
+    body.thirdPartyService.thirdPartySentFor=document.getElementById('tpIssue').value
   }
-   // "thirdPartyService" : {
-   //   "thirdPartyName":document.getElementById('tpName').value,
-   //   "thirdPartyPrice":document.getElementById('tpPrice').value,
-   //   "dateOfSending":document.getElementById('tpSend').value,
-   //   "dateOfReceiving":document.getElementById('tpDate').value
-   // }
 
   xhr.onload = function() {
     if (xhr.status == 201) {
         alert("Submitted")
         data = JSON.parse(xhr.response);
         console.log("code generated "+data);
+        if(localStorage.getItem('adminEmail')==="zomby"){
+            window.open("./dashboardAdmin.html", "app", "resizable=yes");
+        }else{
+                window.open("./dashboard.html", "app", "resizable=yes");
+         }
         } else {
           console.log("code not generated "+xhr.response)
       }
@@ -193,6 +211,11 @@ document.getElementById("confirm").addEventListener("click", function() {
 
 });
 
-// document.getElementById("cancel").addEventListener("click", function() {
-//   window.open("dashboard.html", "app", "resizable=yes");
-// });
+
+document.getElementById("cancel").addEventListener("click", function() {
+  if(localStorage.getItem('adminEmail')==="zomby"){
+      window.open("./dashboardAdmin.html", "app", "resizable=yes");
+  }else{
+          window.open("./dashboard.html", "app", "resizable=yes");
+   }
+  });

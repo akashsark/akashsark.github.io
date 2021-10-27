@@ -1,10 +1,10 @@
 if (localStorage.getItem("servicelogs") != null) {
-  window.location = "./index.html";
+  window.location = "./dashboard.html";
 }
 
 function handler(){
  var xhr = new XMLHttpRequest();
- var url = "http://localhost:9002/admin/login"
+ var url = "https://ccwservice.herokuapp.com/admin/login"
  xhr.open("POST", url, false);
  xhr.setRequestHeader("Content-type", "application/json");
  var body = {
@@ -13,9 +13,10 @@ function handler(){
  };
  xhr.onload = function() {
    if (xhr.status == 200) {
+       var data = JSON.parse(xhr.response);
       localStorage.setItem("servicelogs","true");
       localStorage.setItem("adminEmail",document.getElementById("adminEmail").value)
-      window.location = "index.html";
+      window.location = data.message;
    }else {
     alert("invalid credentials")
    }
