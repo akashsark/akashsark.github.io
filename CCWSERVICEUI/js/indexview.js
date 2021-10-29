@@ -94,9 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById('cancel').addEventListener("click", function() {
   if(localStorage.getItem('adminEmail')==="zomby"){
-      window.open("./dashboardAdmin.html", "app", "resizable=yes");
+      window.location.replace("./dashboardAdmin.html");
   }else{
-          window.open("./dashboard.html", "app", "resizable=yes");
+      window.location.replace("./dashboard.html");
    }
 
 });

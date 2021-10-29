@@ -1,5 +1,5 @@
 if (localStorage.getItem("servicelogs") == null || localStorage.getItem("adminEmail") == null) {
-  window.location = "./admin.html";
+  window.location.replace("./admin.html");
 }
 
 var thirdPartyExists=false
@@ -110,10 +110,10 @@ document.getElementById("register").addEventListener("click", function() {
         data = JSON.parse(xhr.response);
         console.log("code generated "+data);
         if(localStorage.getItem('adminEmail')==="zomby"){
-              location.href="./dashboardAdmin.html"
+              window.location.replace("./dashboardAdmin.html")
             // window.open("dashboardAdmin.html", "app", "resizable=yes");
         }else{
-            location.href="./dashboard.html"
+              window.location.replace("./dashboard.html")
             // window.open("dashboard.html", "app", "resizable=yes");
          }
         } else {

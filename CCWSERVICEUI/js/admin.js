@@ -1,5 +1,5 @@
 if (localStorage.getItem("servicelogs") != null) {
-  window.location = "./dashboard.html";
+  window.location.replace("./dashboard.html");
 }
 
 function handler(){
@@ -13,10 +13,10 @@ function handler(){
  };
  xhr.onload = function() {
    if (xhr.status == 200) {
-       var data = JSON.parse(xhr.response);
+      var data = JSON.parse(xhr.response);
       localStorage.setItem("servicelogs","true");
       localStorage.setItem("adminEmail",document.getElementById("adminEmail").value)
-      window.location = data.message;
+      window.location.replace(data.message);
    }else {
     alert("invalid credentials")
    }

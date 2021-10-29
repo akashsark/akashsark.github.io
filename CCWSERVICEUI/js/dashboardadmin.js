@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservice.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
+  var url = "http://localhost:9002/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + localStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
@@ -43,13 +43,15 @@ function notificationContent(data) {
 
     document.getElementById("view" + i).addEventListener("click", function () {
        localStorage.setItem("srn",document.getElementById(this.id).value)
-       window.open("./indexview.html", "app", "resizable=yes");
+       window.location.replace("./indexview.html")
+       // window.open("./indexview.html", "app", "resizable=yes");
        console.log("log: ", this);
   });
 
   document.getElementById("edit" + i).addEventListener("click", function () {
      localStorage.setItem("srn",document.getElementById(this.id).value)
-     window.open("./indexedit.html", "app", "resizable=yes");
+     window.location.replace("./indexedit.html")
+     // window.open("./indexedit.html", "app", "resizable=yes");
      console.log("log: ", this);
   });
 
@@ -65,7 +67,8 @@ function notificationContent(data) {
     xhr.onload = function() {
       if (xhr.status == 201) {
       alert("Successfully Closed")
-      window.open("./dashboardAdmin.html", "app", "resizable=yes");
+      window.location.replace("./dashboardAdmin.html")
+      // window.open("./dashboardAdmin.html", "app", "resizable=yes");
       }else {
        alert(xhr.response)
       }
@@ -86,7 +89,8 @@ function notificationContent(data) {
     xhr.onload = function() {
       if (xhr.status == 201) {
         alert("Successfully cancelled")
-         window.open("./dashboardAdmin.html", "app", "resizable=yes");
+         window.location.replace("./dashboardAdmin.html")
+         // window.open("./dashboardAdmin.html", "app", "resizable=yes");
       }else {
        alert(xhr.response)
       }
@@ -103,10 +107,12 @@ function notificationContent(data) {
 }
 
 document.getElementById('newcase').addEventListener("click", function () {
-   window.open("./index.html", "app", "resizable=yes");
+  window.location.replace("./index.html")
+   // window.open("./index.html", "app", "resizable=yes");
 });
 
 document.getElementById('signout').addEventListener("click", function () {
    localStorage.clear();
-    window.open("./admin.html", "app", "resizable=yes");
+   window.location.replace("./admin.html")
+    // window.open("./admin.html", "app", "resizable=yes");
 });
