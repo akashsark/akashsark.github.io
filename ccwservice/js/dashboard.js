@@ -64,7 +64,7 @@ function notificationContent(data) {
     var body = {
       "status":"COMPLETED",
       "srn":document.getElementById(this.id).value,
-      "adminEmail": localStorage.getItem('adminEmail')
+      "adminEmail":localStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
@@ -75,10 +75,12 @@ function notificationContent(data) {
        alert(xhr.response)
       }
     };
+  
     xhr.send(JSON.stringify(body));
   });
 
   document.getElementById("cancel" + i).addEventListener("click", function () {
+
     var xhr = new XMLHttpRequest();
     var url = "https://ccwservice.herokuapp.com/service/resolveCase"
     xhr.open("POST", url, false);

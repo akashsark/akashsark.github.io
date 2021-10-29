@@ -65,7 +65,8 @@ function notificationContent(data) {
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
       "status":"COMPLETED",
-      "srn":document.getElementById(this.id).value
+      "srn":document.getElementById(this.id).value,
+      "adminEmail": localStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
