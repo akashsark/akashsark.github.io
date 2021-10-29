@@ -69,7 +69,8 @@ function verifyOTP(){
   };
   xhr.onload = function() {
     if (xhr.status == 200) {
-      alert("OTP Verified")
+       alert("OTP Verified")
+       window.location.replace("./dashboardAdmin.html")
     }else {
      alert(xhr.response)
     }
