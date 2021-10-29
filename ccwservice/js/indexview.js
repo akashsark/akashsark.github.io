@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  if (localStorage.getItem("servicelogs") == null || localStorage.getItem("adminEmail") == null) {
+    window.location.replace("./admin.html");
+  }
   var xhr = new XMLHttpRequest();
   var url = "https://ccwservice.herokuapp.com/service/getDetails"
   xhr.open("POST", url, false);

@@ -60,7 +60,7 @@ function closeForm() {
 
 function verifyOTP(){
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/service/verifyOtp"
+  var url = "https://ccwservice.herokuapp.com/service/verifyOtp"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
@@ -79,7 +79,7 @@ function verifyOTP(){
 
 function resendOtp(){
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/service/resendOtp"
+  var url = "https://ccwservice.herokuapp.com/service/resendOtp"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
