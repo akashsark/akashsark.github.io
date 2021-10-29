@@ -109,6 +109,7 @@ document.getElementById("register").addEventListener("click", function() {
     if (xhr.status == 201) {
         data = JSON.parse(xhr.response);
         console.log("code generated "+data);
+        alert("Case Created")
         if(localStorage.getItem('adminEmail')==="zomby"){
               window.location.replace("./dashboardAdmin.html")
             // window.open("dashboardAdmin.html", "app", "resizable=yes");
