@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:9002/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
+  var url = "https://ccwservice.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + localStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
