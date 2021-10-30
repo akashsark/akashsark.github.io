@@ -130,7 +130,6 @@ document.getElementById("register").addEventListener("click", function() {
 });
 
 document.getElementById("cancel").addEventListener("click", function() {
-  alert("GO BACK")
   if(localStorage.getItem('adminEmail')==="zomby"){
       window.location.replace("./dashboardAdmin.html");
   }else{
