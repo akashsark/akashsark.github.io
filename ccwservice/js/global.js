@@ -128,3 +128,11 @@ document.getElementById("register").addEventListener("click", function() {
   }
 
 });
+
+document.getElementById("cancel").addEventListener("click", function() {
+  if(localStorage.getItem('adminEmail')==="zomby"){
+      window.location.replace("./dashboardAdmin.html");
+  }else{
+      window.location.replace("./dashboard.html");
+   }
+  });
