@@ -1,4 +1,4 @@
-if (localStorage.getItem("servicelogs") != null) {
+if (sessionStorage.getItem("servicelogs") != null) {
   window.location.replace("./dashboard.html");
 }
 
@@ -14,8 +14,8 @@ function handler(){
  xhr.onload = function() {
    if (xhr.status == 200) {
       var data = JSON.parse(xhr.response);
-      localStorage.setItem("servicelogs","true");
-      localStorage.setItem("adminEmail",document.getElementById("adminEmail").value)
+      sessionStorage.setItem("servicelogs","true");
+      sessionStorage.setItem("adminEmail",document.getElementById("adminEmail").value)
       window.location.replace(data.message);
    }else {
     alert("invalid credentials")

@@ -1,4 +1,4 @@
-if (localStorage.getItem("adminlogs") != null) {
+if (sessionStorage.getItem("adminlogs") != null) {
   window.location = "./offerRedeem.html";
 }
 
@@ -13,7 +13,7 @@ function handler(){
  };
  xhr.onload = function() {
    if (xhr.status == 200) {
-         localStorage.setItem("adminlogs","true");
+         sessionStorage.setItem("adminlogs","true");
          window.location = "offerRedeem.html";
    }else {
     alert("invalid credentials")

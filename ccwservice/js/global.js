@@ -1,4 +1,4 @@
-if (localStorage.getItem("servicelogs") == null || localStorage.getItem("adminEmail") == null) {
+if (sessionStorage.getItem("servicelogs") == null || sessionStorage.getItem("adminEmail") == null) {
   window.location.replace("./admin.html");
 }
 
@@ -84,7 +84,7 @@ document.getElementById("register").addEventListener("click", function() {
     "productIssue":document.getElementById('pIssue').value,
     "expectedDateOfDelivery":document.getElementById('pDelivDate').value,
     "accessoriesReceived":document.getElementById('pAccess').value,
-    "adminId":localStorage.getItem('adminEmail'),
+    "adminId":sessionStorage.getItem('adminEmail'),
     "thirdPartyServiceExists":thirdPartyExists,
     "totalServiceCharge":document.getElementById('pTotalCost').value,
     "deliveryStatus":{
@@ -110,7 +110,7 @@ document.getElementById("register").addEventListener("click", function() {
         data = JSON.parse(xhr.response);
         console.log("code generated "+data);
         alert("Case Created")
-        if(localStorage.getItem('adminEmail')==="zomby"){
+        if(sessionStorage.getItem('adminEmail')==="zomby"){
               window.location.replace("./dashboardAdmin.html")
             // window.open("dashboardAdmin.html", "app", "resizable=yes");
         }else{
@@ -130,7 +130,7 @@ document.getElementById("register").addEventListener("click", function() {
 });
 
 document.getElementById("cancel").addEventListener("click", function() {
-  if(localStorage.getItem('adminEmail')==="zomby"){
+  if(sessionStorage.getItem('adminEmail')==="zomby"){
       window.location.replace("./dashboardAdmin.html");
   }else{
       window.location.replace("./dashboard.html");

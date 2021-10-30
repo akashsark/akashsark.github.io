@@ -1,6 +1,6 @@
 var thirdPartyExists=false
 document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("servicelogs") == null || localStorage.getItem("adminEmail") == null) {
+  if (sessionStorage.getItem("servicelogs") == null || sessionStorage.getItem("adminEmail") == null) {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "srn":  localStorage.getItem("srn")
+    "srn":  sessionStorage.getItem("srn")
   };
   xhr.onload = function() {
     if (xhr.status == 200) {
@@ -170,7 +170,7 @@ document.getElementById("confirm").addEventListener("click", function() {
     "productIssue":document.getElementById('pIssue').value,
     "expectedDateOfDelivery":document.getElementById('pDelivDate').value,
     "accessoriesReceived":document.getElementById('pAccess').value,
-    "adminId":localStorage.getItem('adminEmail'),
+    "adminId":sessionStorage.getItem('adminEmail'),
     "thirdPartyServiceExists":thirdPartyExists,
     "totalServiceCharge":document.getElementById('pTotalCost').value,
     "deliveryStatus":{
@@ -197,7 +197,7 @@ document.getElementById("confirm").addEventListener("click", function() {
         alert("Submitted")
         data = JSON.parse(xhr.response);
         console.log("code generated "+data);
-        if(localStorage.getItem('adminEmail')==="zomby"){
+        if(sessionStorage.getItem('adminEmail')==="zomby"){
             window.location.replace("./dashboardAdmin.html");
         }else{
             window.location.replace("./dashboard.html");
@@ -216,7 +216,7 @@ document.getElementById("confirm").addEventListener("click", function() {
 
 
 document.getElementById("cancel").addEventListener("click", function() {
-  if(localStorage.getItem('adminEmail')==="zomby"){
+  if(sessionStorage.getItem('adminEmail')==="zomby"){
       window.location.replace("./dashboardAdmin.html");
   }else{
       window.location.replace("./dashboard.html");

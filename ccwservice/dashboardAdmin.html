@@ -64,7 +64,7 @@ function verifyOTP(){
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "srn":localStorage.getItem('srn'),
+    "srn":sessionStorage.getItem('srn'),
     "otp":document.getElementById('otp').value
   };
   xhr.onload = function() {
@@ -84,8 +84,8 @@ function resendOtp(){
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "srn":localStorage.getItem('srn'),
-    "adminEmail":localStorage.getItem('adminEmail')
+    "srn":sessionStorage.getItem('srn'),
+    "adminEmail":sessionStorage.getItem('adminEmail')
   };
   xhr.onload = function() {
     if (xhr.status == 200) {

@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("servicelogs") == null || localStorage.getItem("adminEmail") == null) {
+  if (sessionStorage.getItem("servicelogs") == null || sessionStorage.getItem("adminEmail") == null) {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
+  var url = "https://ccwservicebackend.herokuapp.com/adminRole/getAllWork?adminEmail="+sessionStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
-  var oauth = "Bearer " + localStorage.getItem("access_token");
+  var oauth = "Bearer " + sessionStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.send();
@@ -45,14 +45,14 @@ function notificationContent(data) {
       newRow.innerHTML = string3;
 
     document.getElementById("view" + i).addEventListener("click", function () {
-       localStorage.setItem("srn",document.getElementById(this.id).value)
+       sessionStorage.setItem("srn",document.getElementById(this.id).value)
        window.location.replace("./indexview.html")
        // window.open("./indexview.html", "app", "resizable=yes");
        console.log("log: ", this);
   });
 
   document.getElementById("edit" + i).addEventListener("click", function () {
-     localStorage.setItem("srn",document.getElementById(this.id).value)
+     sessionStorage.setItem("srn",document.getElementById(this.id).value)
      window.location.replace("./indexedit.html")
      // window.open("./indexedit.html", "app", "resizable=yes");
      console.log("log: ", this);
@@ -66,7 +66,7 @@ function notificationContent(data) {
     var body = {
       "status":"COMPLETED",
       "srn":document.getElementById(this.id).value,
-      "adminEmail": localStorage.getItem('adminEmail')
+      "adminEmail": sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
@@ -88,7 +88,7 @@ function notificationContent(data) {
     var body = {
       "status":"CANCELLED",
       "srn":document.getElementById(this.id).value,
-      "adminEmail": localStorage.getItem('adminEmail')
+      "adminEmail": sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
@@ -103,7 +103,7 @@ function notificationContent(data) {
   });
 
   document.getElementById("verify" + i).addEventListener("click", function () {
-     localStorage.setItem("srn",document.getElementById(this.id).value)
+     sessionStorage.setItem("srn",document.getElementById(this.id).value)
      document.getElementById("myForm").style.display = "block";
   });
  }
@@ -116,7 +116,7 @@ document.getElementById('newcase').addEventListener("click", function () {
 });
 
 document.getElementById('signout').addEventListener("click", function () {
-   localStorage.clear();
+   sessionStorage.clear();
    window.location.replace("./admin.html")
     // window.open("./admin.html", "app", "resizable=yes");
 });
