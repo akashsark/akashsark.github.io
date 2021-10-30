@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         notificationContent(data);
       }
       else {
-        alert(data)
+        alert(data.message)
       }
     }
 });
@@ -67,12 +67,14 @@ function notificationContent(data) {
       "adminEmail":sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
+
       if (xhr.status == 201) {
       alert("Successfully Closed")
       window.location.replace("./dashboard.html")
       // window.open("./dashboard.html", "app", "resizable=yes");
       }else {
-       alert(xhr.response)
+       var data = JSON.parse(xhr.response);
+       alert(data.message)
       }
     };
 
@@ -91,12 +93,14 @@ function notificationContent(data) {
       "adminEmail": sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
+
       if (xhr.status == 201) {
          alert("Successfully cancelled")
          window.location.replace("./dashboard.html")
          // window.open("./dashboard.html", "app", "resizable=yes");
       }else {
-       alert(xhr.response)
+       var data = JSON.parse(xhr.response);
+       alert(data.message)
       }
     };
     xhr.send(JSON.stringify(body));

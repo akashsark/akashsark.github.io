@@ -67,11 +67,13 @@ function verifyOTP(){
     "otp":document.getElementById('otp').value
   };
   xhr.onload = function() {
+
     if (xhr.status == 200) {
       alert("OTP Verified");
       window.location.replace("./dashboard.html")
     }else {
-     alert(xhr.response)
+      var data = JSON.parse(xhr.response);
+     alert(data.message)
     }
   };
   xhr.send(JSON.stringify(body));
@@ -87,10 +89,12 @@ function resendOtp(){
     "adminEmail":sessionStorage.getItem('adminEmail')
   };
   xhr.onload = function() {
+
     if (xhr.status == 200) {
       alert("Message sent")
     }else {
-     alert(xhr.response)
+        var data = JSON.parse(xhr.response);
+     alert(data.message)
     }
   };
   xhr.send(JSON.stringify(body));
