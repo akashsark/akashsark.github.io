@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservice.herokuapp.com/service/getDetails"
+  var url = "https://ccwservicebackend.herokuapp.com/service/getDetails"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {

@@ -4,7 +4,7 @@ if (localStorage.getItem("servicelogs") != null) {
 
 function handler(){
  var xhr = new XMLHttpRequest();
- var url = "https://ccwservice.herokuapp.com/admin/login"
+ var url = "https://ccwservicebackend.herokuapp.com/admin/login"
  xhr.open("POST", url, false);
  xhr.setRequestHeader("Content-type", "application/json");
  var body = {

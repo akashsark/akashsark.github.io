@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservice.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
+  var url = "https://ccwservicebackend.herokuapp.com/adminRole/getAllWork?adminEmail="+localStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + localStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
@@ -60,7 +60,7 @@ function notificationContent(data) {
 
   document.getElementById("tick" + i).addEventListener("click", function () {
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservice.herokuapp.com/service/resolveCase"
+    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
@@ -82,7 +82,7 @@ function notificationContent(data) {
 
   document.getElementById("cancel" + i).addEventListener("click", function () {
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservice.herokuapp.com/service/resolveCase"
+    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {

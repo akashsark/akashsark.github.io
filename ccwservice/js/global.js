@@ -73,7 +73,7 @@ document.getElementById("register").addEventListener("click", function() {
 	// var result = e.options[e.selectedIndex].text;
   // console.log("status is"+result);
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservice.herokuapp.com/service/saveCustomer"
+  var url = "https://ccwservicebackend.herokuapp.com/service/saveCustomer"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
