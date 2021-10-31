@@ -82,7 +82,6 @@ document.getElementById("register").addEventListener("click", function() {
     "productDescription":document.getElementById('pDesc').value,
     "productSerialNumber":document.getElementById('pSno').value,
     "productIssue":document.getElementById('pIssue').value,
-    "expectedDateOfDelivery":document.getElementById('pDelivDate').value,
     "accessoriesReceived":document.getElementById('pAccess').value,
     "adminId":sessionStorage.getItem('adminEmail'),
     "thirdPartyServiceExists":thirdPartyExists,

@@ -72,7 +72,7 @@ function verifyOTP(){
        alert("OTP Verified")
        window.location.replace("./dashboardAdmin.html")
     }else {
-        var data = JSON.parse(xhr.response);
+     var data = JSON.parse(xhr.response);
      alert(data.message)
     }
   };

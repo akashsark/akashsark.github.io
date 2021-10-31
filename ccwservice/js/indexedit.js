@@ -159,20 +159,20 @@ document.getElementById("confirm").addEventListener("click", function() {
 	// var result = e.options[e.selectedIndex].text;
   // console.log("status is"+result);
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/service/saveCustomer"
-  xhr.open("POST", url, false);
+  var url = "https://ccwservicebackend.herokuapp.com/service/updateCustomer"
+  xhr.open("PUT", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
-    "customerName":document.getElementById('cname').value,
-    "customerMobile":document.getElementById('contact').value,
-    "productDescription":document.getElementById('pDesc').value,
-    "productSerialNumber":document.getElementById('pSno').value,
-    "productIssue":document.getElementById('pIssue').value,
-    "expectedDateOfDelivery":document.getElementById('pDelivDate').value,
-    "accessoriesReceived":document.getElementById('pAccess').value,
+    "serviceRequestNumber":document.getElementById('srnI').value,
+    "customerName":document.getElementById('cnameI').value,
+    "customerMobile":document.getElementById('contactI').value,
+    "productDescription":document.getElementById('pDescI').value,
+    "productSerialNumber":document.getElementById('pSnoI').value,
+    "productIssue":document.getElementById('pIssueI').value,
+    "accessoriesReceived":document.getElementById('pAccessI').value,
     "adminId":sessionStorage.getItem('adminEmail'),
     "thirdPartyServiceExists":thirdPartyExists,
-    "totalServiceCharge":document.getElementById('pTotalCost').value,
+    "totalServiceCharge":document.getElementById('pTotalCostI').value,
     "deliveryStatus":{
       "status":"IN PROGRESS",
       "expectedDateOfDelivery":document.getElementById('pDelivDate').value
@@ -194,15 +194,14 @@ document.getElementById("confirm").addEventListener("click", function() {
 
   xhr.onload = function() {
     if (xhr.status == 201) {
-        alert("Submitted")
-        data = JSON.parse(xhr.response);
-        console.log("code generated "+data);
+        alert("Case is Updated")
         if(sessionStorage.getItem('adminEmail')==="zomby"){
             window.location.replace("./dashboardAdmin.html");
         }else{
             window.location.replace("./dashboard.html");
          }
         } else {
+            alert("Failed "+xhr.response)
           console.log("code not generated "+xhr.response)
       }
     };
