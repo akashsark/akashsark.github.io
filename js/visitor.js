@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
- setTimeout(function(){   document.getElementById("explore").click();
+ // setTimeout(function(){   document.getElementById("explore").click();
 document.getElementById("textmob").value=MobileNumber;
 }, 2000);
 
