@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="name">Total Charge</div>
+                            <div class="name">Service Charge</div>
                             <div class="value">
                                   <div class="input-group">
                                           <input class="input--style-5" type="text" id="pTotalCostI">
@@ -134,22 +134,25 @@
 
                         </div>
 
-                        <!-- <div class="form-row">
-                                <div class="name">Status</div>
-                                <div class="value">
-                                    <div class="input-group">
-                                        <div class="rs-select2 js-select-simple select--no-search">
-                                            <select name="status" id="statusI">
-                                                <option disabled="disabled" value="none" selected="selected">Choose option</option>
-                                                <option value="IN PROGRESS">IN PROGRESS</option>
-                                                <option value="CANCELLED">CANCELLED</option>
-                                                <option value="COMPLETED">COMPLETED</option>
-                                            </select>
-                                            <div class="select-dropdown"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                        <div class="form-row p-t-20">
+                            <label class="label label--block">Accessories Added</label>
+                            <div class="p-t-15">
+                                <label class="radio-container m-r-55">Yes
+                                    <input type="radio" name="Accessories" id="aTrue" value="yes">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="radio-container">No
+                                    <input type="radio" checked="checked" name="Accessories" id="aFalse" value="no">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="placeholderAccesoriesI">
+
+                        </div>
+
+
                             <button class="btn btn--radius-2 btn--red" type="button" id="cancel">GO BACK</button>
                         <!-- <div>
                             <button class="btn btn--radius-2 btn--red" type="submit" id="registerI">Register</button>
@@ -168,6 +171,7 @@
     <script src="vendor/datepicker/daterangepicker.js"></script>
 
     <!-- Main JS-->
+    <script src="js/url.js"></script>
     <script src="js/indexview.js"></script>
 
 </body>

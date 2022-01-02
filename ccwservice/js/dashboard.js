@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/service/getInProgressWork?adminEmail="+sessionStorage.getItem('adminEmail')
+  var url = baseurl+"service/getInProgressWork?adminEmail="+sessionStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + sessionStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
@@ -58,7 +58,7 @@ function notificationContent(data) {
 
   document.getElementById("tick" + i).addEventListener("click", function () {
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
+    var url = baseurl+"service/resolveCase"
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
@@ -67,11 +67,24 @@ function notificationContent(data) {
       "adminEmail":sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
-
       if (xhr.status == 201) {
-      alert("Successfully Closed")
-      window.location.replace("./dashboard.html")
-      // window.open("./dashboard.html", "app", "resizable=yes");
+        var data = JSON.parse(xhr.response);
+        swal(
+        {
+          icon: "success",
+          title: "Success!",
+          text: "Case Closed Successfully. Please review the bill ",
+          type: "success",
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'Preview Bill'
+        },
+        function () {
+            window.open(data.webViewURL)
+            window.location.replace("./dashboard.html")
+        }
+      )
+      // alert("Successfully Closed")
+      // window.location.replace("./dashboard.html")
       }else {
        var data = JSON.parse(xhr.response);
        alert(data.message)
@@ -84,7 +97,7 @@ function notificationContent(data) {
   document.getElementById("cancel" + i).addEventListener("click", function () {
 
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
+    var url = baseurl+"service/resolveCase"
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
@@ -95,9 +108,21 @@ function notificationContent(data) {
     xhr.onload = function() {
 
       if (xhr.status == 201) {
-         alert("Successfully cancelled")
-         window.location.replace("./dashboard.html")
-         // window.open("./dashboard.html", "app", "resizable=yes");
+        swal(
+        {
+          icon: "success",
+          title: "Success!",
+          text: "Successfully cancelled ",
+          type: "success",
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'OK',
+        },
+        function () {
+            window.location.replace("./dashboard.html")
+        }
+      )
+         // alert("Successfully cancelled")
+         // window.location.replace("./dashboard.html")
       }else {
        var data = JSON.parse(xhr.response);
        alert(data.message)
@@ -109,6 +134,7 @@ function notificationContent(data) {
   document.getElementById("verify" + i).addEventListener("click", function () {
      sessionStorage.setItem("srn",document.getElementById(this.id).value)
      document.getElementById("myForm").style.display = "block";
+     document.getElementById("ss").innerHTML=document.getElementById(this.id).value
   });
  }
 

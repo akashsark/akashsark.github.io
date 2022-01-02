@@ -3,8 +3,8 @@ if (sessionStorage.getItem("servicelogs") == null || sessionStorage.getItem("adm
 }
 
 var thirdPartyExists=false
-$("input[type='radio']").change(function(){
-
+$(document).ready(function() {
+    $("input[name$='exist']").change(function() {
    if($(this).val()=="yes"){
      console.log("tp enable");
      thirdPartyExists=true;
@@ -66,67 +66,199 @@ $("input[type='radio']").change(function(){
       console.log("tp disable");
    }
 
+  });
+
 });
+
+var paccessoriesExists=false
+$(document).ready(function() {
+    $("input[name$='Accessories']").change(function() {
+      if($(this).val()=="yes"){
+      paccessoriesExists=true;
+      string4=`<div id="accTable">
+      <table id="tblCustomers" cellpadding="0" cellspacing="0" border="1">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th id="quantity">Quantity</th>
+                <th id="price">Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtName" /></td>
+                <td><input type="text" id="txtQuantity" /></td>
+                <td><input type="text" id="txtPrice" /></td>
+               <td><button type="button" id="add" onclick="Add()" value="Add" >Add</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+`
+
+      var container = document.createElement("div");
+      container.innerHTML = string4;
+     document.getElementById("placeholderAccesories").appendChild(container);
+   }else{
+     paccessoriesExists=false;
+     const var1 = document.getElementById("accTable");
+      var1.parentNode.removeChild(var1);
+      console.log("tp disable");
+   }
+
+    });
+
+  });
+
+  function Add() {
+         var txtName = document.getElementById("txtName");
+         var txtQuantity = document.getElementById("txtQuantity");
+         var txtPrice = document.getElementById("txtPrice");
+         AddRow(txtName.value, txtQuantity.value, txtPrice.value);
+         txtName.value = "";
+         txtQuantity.value = "";
+         txtPrice.value=""
+     };
+
+     function Remove(button) {
+         //Determine the reference of the Row using the Button.
+         var row = button.parentNode.parentNode;
+         var name = row.getElementsByTagName("TD")[0].innerHTML;
+         if (confirm("Do you want to delete the product: " + name)) {
+
+             //Get the reference of the Table.
+             var table = document.getElementById("tblCustomers");
+
+             //Delete the Table row using it's Index.
+             table.deleteRow(row.rowIndex);
+         }
+     };
+
+     function AddRow(name, quantity, price) {
+         //Get the reference of the Table's TBODY element.
+         var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
+
+         //Add Row.
+         row = tBody.insertRow(-1);
+
+         //Add Name cell.
+         var cell = row.insertCell(-1);
+         cell.innerHTML = name;
+
+         //Add Country cell.
+         cell = row.insertCell(-1);
+         cell.innerHTML = quantity;
+
+         //Add Price Cell
+         cell = row.insertCell(-1);
+         cell.innerHTML = price;
+
+         //Add Button cell.
+         cell = row.insertCell(-1);
+         var btnRemove = document.createElement("INPUT");
+         btnRemove.type = "button";
+         btnRemove.value = "Remove";
+         btnRemove.id = "remove";
+         btnRemove.setAttribute("onclick", "Remove(this);");
+         cell.appendChild(btnRemove);
+     }
+
 
 document.getElementById("register").addEventListener("click", function() {
-  // var e = document.getElementById("status");
-	// var result = e.options[e.selectedIndex].text;
-  // console.log("status is"+result);
-  var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/service/saveCustomer"
-  xhr.open("POST", url, false);
-  xhr.setRequestHeader("Content-type", "application/json");
-  var body = {
-    "customerName":document.getElementById('cname').value,
-    "customerMobile":document.getElementById('contact').value,
-    "productDescription":document.getElementById('pDesc').value,
-    "productSerialNumber":document.getElementById('pSno').value,
-    "productIssue":document.getElementById('pIssue').value,
-    "accessoriesReceived":document.getElementById('pAccess').value,
-    "adminId":sessionStorage.getItem('adminEmail'),
-    "thirdPartyServiceExists":thirdPartyExists,
-    "totalServiceCharge":document.getElementById('pTotalCost').value,
-    "deliveryStatus":{
-      "status":"IN PROGRESS",
-      "expectedDateOfDelivery":document.getElementById('pDelivDate').value
-   },
-    "thirdPartyService" : {
 
-    }
+  if(validation()){
+    var xhr = new XMLHttpRequest();
+    var url = baseurl+"service/saveCustomer"
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json");
+    var body = {
+      "customerName":document.getElementById('cname').value,
+      "customerMobile":document.getElementById('contact').value,
+      "productDescription":document.getElementById('pDesc').value,
+      "productSerialNumber":document.getElementById('pSno').value,
+      "productIssue":document.getElementById('pIssue').value,
+      "accessoriesReceived":document.getElementById('pAccess').value,
+      "adminId":sessionStorage.getItem('adminEmail'),
+      "thirdPartyServiceExists":thirdPartyExists,
+      "totalServiceCharge":document.getElementById('pTotalCost').value,
+      "deliveryStatus":{
+        "status":"IN PROGRESS",
+        "expectedDateOfDelivery":document.getElementById('pDelivDate').value
+     },
+      "thirdPartyService" : {
 
-  };
+      },
+      "accesoriesExists":paccessoriesExists,
+      "productDetails":{
 
-
-  if(thirdPartyExists==true){
-    body.thirdPartyService.thirdPartyName=document.getElementById('tpName').value,
-    body.thirdPartyService.thirdPartyPrice=document.getElementById('tpPrice').value,
-    body.thirdPartyService.dateOfSending=document.getElementById('tpSend').value,
-    body.thirdPartyService.dateOfReceiving=document.getElementById('tpDate').value
-    body.thirdPartyService.thirdPartySentFor=document.getElementById('tpIssue').value
-  }
-  xhr.onload = function() {
-    if (xhr.status == 201) {
-        data = JSON.parse(xhr.response);
-        console.log("code generated "+data);
-        alert("Case Created")
-        if(sessionStorage.getItem('adminEmail')==="zomby"){
-              window.location.replace("./dashboardAdmin.html")
-            // window.open("dashboardAdmin.html", "app", "resizable=yes");
-        }else{
-              window.location.replace("./dashboard.html")
-            // window.open("dashboard.html", "app", "resizable=yes");
-         }
-        } else {
-          console.log("code not generated "+xhr.response)
       }
+
     };
-    try{
-        xhr.send(JSON.stringify(body));
-  }catch(err){
-    alert(err)
+
+
+    if(thirdPartyExists==true){
+      body.thirdPartyService.thirdPartyName = document.getElementById('tpName').value,
+      body.thirdPartyService.thirdPartyPrice = document.getElementById('tpPrice').value,
+      body.thirdPartyService.dateOfSending = document.getElementById('tpSend').value,
+      body.thirdPartyService.dateOfReceiving = document.getElementById('tpDate').value
+      body.thirdPartyService.thirdPartySentFor = document.getElementById('tpIssue').value
+    }
+    if(paccessoriesExists==true){
+      body.productDetails.accessoriesAdded = collectAccessories()
+    }
+    xhr.onload = function() {
+      if (xhr.status == 201) {
+          data = JSON.parse(xhr.response);
+          console.log("code generated "+data);
+          alert("Case Created")
+          if(sessionStorage.getItem('adminEmail')==="zomby"){
+                window.location.replace("./dashboardAdmin.html")
+              // window.open("dashboardAdmin.html", "app", "resizable=yes");
+          }else{
+                window.location.replace("./dashboard.html")
+              // window.open("dashboard.html", "app", "resizable=yes");
+           }
+          } else {
+            console.log("code not generated "+xhr.response)
+        }
+      };
+      try{
+          xhr.send(JSON.stringify(body));
+    }catch(err){
+      alert(err)
+    }
   }
+
 
 });
+
+function collectAccessories(){
+
+let countArr = [];
+let accessoriesDetails =[];
+  var cell = document.getElementsByTagName("td");
+         var i = 0;
+         while(cell[i] != undefined){
+              if(cell[i].innerHTML.indexOf("<") ==-1){
+                countArr.push(cell[i].innerHTML);
+              }
+              i++;
+            }
+
+for(var i=0;i<(countArr.length);i=i+3){
+  accessoriesDetails.push({
+    pname: countArr[i],
+    quantity: countArr[i+1],
+    price: countArr[i+2]
+  })
+}
+  console.log("accessoriesDetails"+JSON.stringify(accessoriesDetails))
+  return JSON.stringify(accessoriesDetails);
+
+}
 
 document.getElementById("cancel").addEventListener("click", function() {
   if(sessionStorage.getItem('adminEmail')==="zomby"){
@@ -135,3 +267,105 @@ document.getElementById("cancel").addEventListener("click", function() {
       window.location.replace("./dashboard.html");
    }
   });
+
+function validation(){
+  var mob = /^[1-9]{1}[0-9]{9}$/;
+  var cname = document.getElementById('cname');
+  var contact = document.getElementById('contact');
+  var pDesc = document.getElementById('pDesc');
+  var pSno = document.getElementById('pSno');
+  var pIssue = document.getElementById('pIssue');
+  var pAccess = document.getElementById('pAccess');
+  var pTotalCost = document.getElementById('pTotalCost');
+  var pDelivDate = document.getElementById('pDelivDate');
+  if(thirdPartyExists == true){
+    var tpName = document.getElementById('tpName');
+    var tpPrice = document.getElementById('tpPrice');
+    var tpSend = document.getElementById('tpSend');
+    var tpDate = document.getElementById('tpDate')
+    var tpIssue = document.getElementById('tpIssue');
+    }
+
+
+  if(cname.value==="" || cname.value===" " ){
+    alert("Please enter customer name")
+    cname.focus();
+    return false;
+  }
+  if(contact.value==="" || contact.value===" " ){
+    alert("Please enter customer mobile number")
+    contact.focus();
+    return false;
+  }
+  if(pDesc.value==="" || pDesc.value===" " ){
+    alert("Please enter product description")
+    pDesc.focus();
+    return false;
+  }
+  if(pSno.value==="" || pSno.value===" " ){
+    alert("Please enter product serial number")
+    pSno.focus();
+    return false;
+  }
+  if(pIssue.value==="" || pIssue.value===" " ){
+    alert("Please enter product issue")
+    pIssue.focus();
+    return false;
+  }
+  if(pAccess.value==="" || pAccess.value===" " ){
+    alert("Please enter accessories received")
+    pAccess.focus()
+    return false;
+  }
+  if(pTotalCost.value==="" || pTotalCost.value===" " ){
+    alert("Please enter service charge")
+    pTotalCost.focus();
+    return false;
+  }
+  if(pDelivDate.value==="" || pDelivDate.value===" " ){
+    alert("Please enter delivery date")
+    pDelivDate.focus()
+    return false;
+  }
+  if(mob.test(contact.value)==false){
+    alert("Please enter valid mobile number")
+    contact.focus();
+    return false;
+  }
+  if(thirdPartyExists == true){
+    if(tpName.value==="" || tpName.value===" " ){
+      alert("Please enter third party name")
+      tpName.focus();
+      return false;
+    }
+    if(tpPrice.value==="" || tpPrice.value===" " ){
+      alert("Please enter third party cost")
+      tpPrice.focus();
+      return false;
+    }
+    if(tpSend.value==="" || tpSend.value===" " ){
+      alert("Please enter third party sending date")
+      tpSend.focus();
+      return false;
+    }
+    if(tpDate.value==="" || tpDate.value===" " ){
+      alert("Please enter third party receiving date")
+      tpDate.focus()
+      return false;
+    }
+    if(tpIssue.value==="" || tpIssue.value===" " ){
+      alert("Please enter third party sent for:")
+      tpIssue.focus()
+      return false;
+    }
+  }
+  if(paccessoriesExists==true){
+    var cell = document.getElementsByTagName("td");
+    if(cell.length==4){
+      alert("Please fill Accessories Added Table")
+      return false;
+    }
+  }
+
+  return true;
+}

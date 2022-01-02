@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/service/getDetails"
+  var url = baseurl+"service/getDetails"
   xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json");
   var body = {
@@ -28,8 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(data.pThirdPartyExists).checked = true;
       document.getElementById('true').disabled=true;
       document.getElementById('false').disabled=true;
-      // document.getElementById("statusI").value = data.status;
-      // document.getElementById("statusI").disabled=true;
+      document.getElementById('aTrue').disabled=true;
+      document.getElementById('aFalse').disabled=true;
+
+
       if(data.pThirdPartyExists==true){
         string3=`<div id="child">
                    <div class="form-row">
@@ -88,6 +90,33 @@ document.addEventListener("DOMContentLoaded", function () {
                   document.getElementById('tpIssue').value=data.thirdPartySent;
 
          }
+         if(data.pAccessoriesExists==true){
+
+           var details = JSON.parse(data. pAccesoriesAdded)
+           document.getElementById('aTrue').checked = true;
+           document.getElementById('aTrue').disabled=true;
+           document.getElementById('aFalse').disabled=true;
+
+           string4=`<div id="accTable">
+           <table id="tblCustomers" cellpadding="0" cellspacing="0" border="1" style="margin-bottom: 3%;">
+             <thead>
+                 <tr>
+                     <th>Product Name</th>
+                     <th id="quantity">Quantity</th>
+                     <th id="price">Price</th>
+                 </tr>
+             </thead>
+             <tbody>
+             </tbody>
+         </table>
+         </div>`;
+           var container = document.createElement("div");
+           container.innerHTML = string4;
+          document.getElementById("placeholderAccesoriesI").appendChild(container);
+          for(var i=0;i<details.length;i++){
+            AddRow(details[i].pname,details[i].quantity,details[i].price)
+          }
+         }
     }else {
      alert("invalid srn")
     }
@@ -95,6 +124,36 @@ document.addEventListener("DOMContentLoaded", function () {
   xhr.send(JSON.stringify(body));
 });
 
+function Add() {
+       var txtName = document.getElementById("txtName");
+       var txtQuantity = document.getElementById("txtQuantity");
+       var txtPrice = document.getElementById("txtPrice");
+       AddRow(txtName.value, txtQuantity.value, txtPrice.value);
+       txtName.value = "";
+       txtQuantity.value = "";
+       txtPrice.value=""
+   };
+
+   function AddRow(name, quantity, price) {
+       //Get the reference of the Table's TBODY element.
+       var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
+
+       //Add Row.
+       row = tBody.insertRow(-1);
+
+       //Add Name cell.
+       var cell = row.insertCell(-1);
+       cell.innerHTML = name;
+
+       //Add Country cell.
+       cell = row.insertCell(-1);
+       cell.innerHTML = quantity;
+
+       //Add Price Cell
+       cell = row.insertCell(-1);
+       cell.innerHTML = price;
+
+   }
 document.getElementById('cancel').addEventListener("click", function() {
   if(sessionStorage.getItem('adminEmail')==="zomby"){
       window.location.replace("./dashboardAdmin.html");

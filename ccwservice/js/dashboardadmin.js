@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.replace("./admin.html");
   }
   var xhr = new XMLHttpRequest();
-  var url = "https://ccwservicebackend.herokuapp.com/adminRole/getAllWork?adminEmail="+sessionStorage.getItem('adminEmail')
+  var url = baseurl+"adminRole/getAllWork?adminEmail="+sessionStorage.getItem('adminEmail')
   xhr.open("GET", url, false);
   var oauth = "Bearer " + sessionStorage.getItem("access_token");
   xhr.setRequestHeader("Authorization", oauth);
@@ -54,14 +54,16 @@ function notificationContent(data) {
   document.getElementById("edit" + i).addEventListener("click", function () {
      sessionStorage.setItem("srn",document.getElementById(this.id).value)
      window.location.replace("./indexedit.html")
-     // window.open("./indexedit.html", "app", "resizable=yes");
      console.log("log: ", this);
   });
 
   document.getElementById("tick" + i).addEventListener("click", function () {
+
+  document.getElementById('loading').style.display='block';
+
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
-    xhr.open("POST", url, false);
+    var url = baseurl+"service/resolveCase"
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
       "status":"COMPLETED",
@@ -69,23 +71,41 @@ function notificationContent(data) {
       "adminEmail": sessionStorage.getItem('adminEmail')
     };
     xhr.onload = function() {
-
       if (xhr.status == 201) {
-      alert("Successfully Closed")
-      window.location.replace("./dashboardAdmin.html")
-      // window.open("./dashboardAdmin.html", "app", "resizable=yes");
+        document.getElementById('loading').style.display='none';
+         var data = JSON.parse(xhr.response);
+         swal(
+         {
+           icon: "success",
+           title: "Success!",
+           text: "Case Closed Successfully. Please review the bill ",
+           type: "success",
+           confirmButtonColor: '#DD6B55',
+           confirmButtonText: 'Preview Bill'
+         },
+         function () {
+             window.open(data.webViewURL)
+             window.location.replace("./dashboardAdmin.html")
+         }
+       )
       }else {
+        document.getElementById('loading').style.display='none';
        var data = JSON.parse(xhr.response);
        alert(data.message)
       }
     };
+
     xhr.send(JSON.stringify(body));
   });
 
+
+
+
   document.getElementById("cancel" + i).addEventListener("click", function () {
+    document.getElementById('loading').style.display='block';
     var xhr = new XMLHttpRequest();
-    var url = "https://ccwservicebackend.herokuapp.com/service/resolveCase"
-    xhr.open("POST", url, false);
+    var url = baseurl+"service/resolveCase"
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
       "status":"CANCELLED",
@@ -95,10 +115,24 @@ function notificationContent(data) {
     xhr.onload = function() {
 
       if (xhr.status == 201) {
-        alert("Successfully cancelled")
-         window.location.replace("./dashboardAdmin.html")
-         // window.open("./dashboardAdmin.html", "app", "resizable=yes");
+        document.getElementById('loading').style.display='none';
+        swal(
+        {
+          icon: "success",
+          title: "Success!",
+          text: "Successfully cancelled ",
+          type: "success",
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'OK',
+        },
+        function () {
+            window.location.replace("./dashboardAdmin.html")
+        }
+      )
+        // alert("Successfully cancelled")
+        //  window.location.replace("./dashboardAdmin.html")
       }else {
+        document.getElementById('loading').style.display='none';
        var data = JSON.parse(xhr.response);
        alert(data.message)
       }
@@ -109,6 +143,7 @@ function notificationContent(data) {
   document.getElementById("verify" + i).addEventListener("click", function () {
      sessionStorage.setItem("srn",document.getElementById(this.id).value)
      document.getElementById("myForm").style.display = "block";
+     document.getElementById("ss").innerHTML=document.getElementById(this.id).value
   });
  }
 
