@@ -192,7 +192,7 @@ document.getElementById("register").addEventListener("click", function() {
 
       },
       "accesoriesExists":paccessoriesExists,
-      "productDetails":{
+      "accessoriesAdded":{
 
       }
 
@@ -207,7 +207,7 @@ document.getElementById("register").addEventListener("click", function() {
       body.thirdPartyService.thirdPartySentFor = document.getElementById('tpIssue').value
     }
     if(paccessoriesExists==true){
-      body.productDetails.accessoriesAdded = collectAccessories()
+      body.accessoriesAdded = collectAccessories()
     }
     xhr.onload = function() {
       if (xhr.status == 201) {
