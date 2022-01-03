@@ -60,7 +60,7 @@ function notificationContent(data) {
     document.getElementById('loading').style.display='block';
     var xhr = new XMLHttpRequest();
     var url = baseurl+"service/resolveCase"
-    xhr.open("POST", url, false);
+    xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json");
     var body = {
       "status":"COMPLETED",
