@@ -309,9 +309,7 @@ document.getElementById("confirm").addEventListener("click", function() {
 
      },
        "accesoriesExists":paccessoriesExists,
-       "accessoriesAdded":{
-
-       }
+       "accessoriesAdded":""
 
    };
 

@@ -192,9 +192,7 @@ document.getElementById("register").addEventListener("click", function() {
 
       },
       "accesoriesExists":paccessoriesExists,
-      "accessoriesAdded":{
-
-      }
+      "accessoriesAdded":""
 
     };
 
