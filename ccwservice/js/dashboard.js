@@ -57,6 +57,7 @@ function notificationContent(data) {
   });
 
   document.getElementById("tick" + i).addEventListener("click", function () {
+    document.getElementById('loading').style.display='block';
     var xhr = new XMLHttpRequest();
     var url = baseurl+"service/resolveCase"
     xhr.open("POST", url, false);
@@ -68,6 +69,7 @@ function notificationContent(data) {
     };
     xhr.onload = function() {
       if (xhr.status == 201) {
+          document.getElementById('loading').style.display='none';
         var data = JSON.parse(xhr.response);
         swal(
         {
@@ -86,6 +88,7 @@ function notificationContent(data) {
       // alert("Successfully Closed")
       // window.location.replace("./dashboard.html")
       }else {
+          document.getElementById('loading').style.display='none';
        var data = JSON.parse(xhr.response);
        alert(data.message)
       }
